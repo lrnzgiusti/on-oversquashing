@@ -1,0 +1,57 @@
+program: exp/run.py
+method: bayes
+metric:
+  name: final_acc
+  goal: maximize
+parameters:
+  dataset:
+    distribution: constant
+    value: "SYNTH"
+  hidden_dim:
+    distribution: categorical
+    values: [16, 32, 64, 128]
+  bs:
+    distribution: categorical
+    values: [32, 64, 128]
+  weight_decay:
+    distribution: uniform
+    min: 0.0
+    max: 0.01
+  lr:
+    distribution: constant
+    value: 0.005
+  epochs:
+    distribution: constant
+    value: 500
+  early_stopping:
+    distribution: constant
+    value: 50
+  mpnn_layers:
+    distribution: categorical
+    values: [1,2,3,4,5]
+  mpnn_arch:
+    distribution: categorical
+    values: ['gcn', 'sage', 'gat', 'gin']
+  activ:
+    distribution: constant
+    value: 'relu'
+  reduce:
+    distribution: categorical
+    values: ['sum', 'mean','max']
+  dropout:
+    distribution: uniform
+    min: 0.0
+    max: 0.6 
+  input_dropout:
+    distribution: uniform
+    min: 0.0
+    max: 0.6
+  min_acc:
+    distribution: constant
+    value: 0.5
+command:
+  - ${env}
+  - python3
+  - ${program}
+  - ${args}
+  - --entity=${entity}
